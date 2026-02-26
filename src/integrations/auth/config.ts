@@ -1,4 +1,4 @@
-import { BetterAuthError } from "@better-auth/core/error";
+import { BetterAuthError } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { betterAuth } from "better-auth/minimal";
 import { apiKey, type GenericOAuthConfig, genericOAuth, openAPI, twoFactor } from "better-auth/plugins";

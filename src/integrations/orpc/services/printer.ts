@@ -153,6 +153,7 @@ export const printerService = {
 
 						// Now measure the total height (margins are now part of the DOM)
 						let totalHeight = 0;
+
 						for (const el of pageElements) {
 							const pageEl = el as HTMLElement;
 							// offsetHeight includes padding and border, but not margin
@@ -164,23 +165,13 @@ export const printerService = {
 						return Math.max(totalHeight, minPageHeight);
 					}
 
-					// For A4/Letter: existing behavior
-					// The --page-height CSS variable controls the height of each resume page.
-					// We need to reduce it by the PDF margins so content fits within the printable area.
-					// Without this, content would overflow and create empty pages.
-					const rootHeight = getComputedStyle(root).getPropertyValue("--page-height").trim();
-					const containerHeight = container
-						? getComputedStyle(container).getPropertyValue("--page-height").trim()
-						: null;
-					const currentHeight = containerHeight || rootHeight;
-					const heightValue = Math.min(Number.parseFloat(currentHeight), minPageHeight);
+					// For A4/Letter
+					const heightValue = minPageHeight;
 
-					if (!Number.isNaN(heightValue)) {
-						// Subtract top + bottom margins from page height
-						const newHeight = `${heightValue - marginY}px`;
-						if (container) container.style.setProperty("--page-height", newHeight);
-						root.style.setProperty("--page-height", newHeight);
-					}
+					// Subtract top + bottom margins from page height
+					const newHeight = `${heightValue - marginY}px`;
+					if (container) container.style.setProperty("--page-height", newHeight);
+					root.style.setProperty("--page-height", newHeight);
 
 					// Add page break CSS to each resume page element (identified by data-page-index attribute)
 					// This ensures each visual resume page starts a new PDF page

@@ -29,10 +29,6 @@ export function DitgarTemplate({ pageIndex, pageLayout }: TemplateProps) {
 	const isFirstPage = pageIndex === 0;
 	const { main, sidebar, fullWidth } = pageLayout;
 
-	const SummaryComponent = getSectionComponent("summary", {
-		sectionClassName: cn(sectionClassName, "px-(--page-margin-x) pt-(--page-margin-y)"),
-	});
-
 	return (
 		<div className="template-ditgar page-content">
 			{/* Sidebar Background */}
@@ -55,15 +51,11 @@ export function DitgarTemplate({ pageIndex, pageLayout }: TemplateProps) {
 				)}
 
 				<main data-layout="main" className={cn("main group z-10", !fullWidth ? "col-span-2" : "col-span-3")}>
-					{isFirstPage && <SummaryComponent id="summary" />}
-
 					<div className="space-y-4 px-(--page-margin-x) pt-(--page-margin-y)">
-						{main
-							.filter((section) => section !== "summary")
-							.map((section) => {
-								const Component = getSectionComponent(section, { sectionClassName });
-								return <Component key={section} id={section} />;
-							})}
+						{main.map((section) => {
+							const Component = getSectionComponent(section, { sectionClassName });
+							return <Component key={section} id={section} />;
+						})}
 					</div>
 				</main>
 			</div>
